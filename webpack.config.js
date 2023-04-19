@@ -32,6 +32,10 @@ module.exports = {
         loader: "url-loader",
         options: { limit: false },
       },
+      {
+        test: /\.(png|jpg)$/i,
+        type: 'asset/resource'
+      }
     ],
   },
 };
