@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import MemoryCard from "./components/card";
+import MemoryCard from "./components/card?uniqueID=123";
 import img1 from "./components/images/react.png"
 import img2 from "./components/images/babel.png"
 import img3 from "./components/images/flutter.png"
