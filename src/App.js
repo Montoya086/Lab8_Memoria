@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Modal, Box, Typography, Button } from "@mui/material";
 import MemoryCard from "./components/card?uniqueID=123";
 import img1 from "./components/images/react.png"
 import img2 from "./components/images/babel.png"
@@ -8,6 +9,7 @@ import img5 from "./components/images/sass.png"
 import img6 from "./components/images/webpack.png"
 import img7 from "./components/images/firebase.png"
 import img8 from "./components/images/bootstrap.png"
+import imgwin from "./components/images/win.png"
 const cardImg = [
   { img: img1, paired: false},
   { img: img2, paired: false},
@@ -19,12 +21,26 @@ const cardImg = [
   { img: img8, paired: false},
 ]
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 200,
+  bgcolor: '#FFF',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 const App = () => {
   const [cards, setCards] = useState([])
   const [movs, setMovs] = useState(0)
+  const [corrects, setCorrects] = useState(8)
   const [flipped1, setFlipped1] = useState(null)
   const [flipped2, setFlipped2] = useState(null)
   const [state, setState] = useState(true)
+  const [win, setWin] = useState(false)
   useEffect(() => {
     shuffle()
   }, [])
@@ -50,6 +66,7 @@ const App = () => {
       setMovs(movs+1)
       setState(false)
       if(flipped1.img===flipped2.img){
+        setCorrects(corrects+1)
         flipped1.paired=true
         flipped2.paired=true
         setState(true)
@@ -61,6 +78,11 @@ const App = () => {
         }, 1500);
       }
     }
+    if(corrects===cardImg.length){
+      setTimeout(() => {
+        setWin(true)
+      }, 1750);
+    }
   },[flipped1,flipped2])
 
   const handleFail =()=>{
@@ -69,10 +91,18 @@ const App = () => {
     setState(true)
   }
 
+  const handleClose=()=>{
+    setWin(false)
+    window.location.reload(false);
+  }
+
   return(
+    <>
     <div className="body">
       <div className="header">
           <p>Movimientos: {movs}</p>
+          <p>Aciertos: {corrects}</p>
+          <Button onClick={handleClose}>Reiniciar</Button>
       </div>
       <div className="container">
         <div className="game-grid">
@@ -86,6 +116,17 @@ const App = () => {
         </div>
       </div>
     </div>
+    <Modal open={win} onClose={handleClose}>
+      <Box sx={style}>
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          <div className="container modal-box">
+            Has ganado!
+            <img src={imgwin} className="win-img"/>
+          </div>
+        </Typography>
+      </Box>
+    </Modal>
+    </>
   )
 };
 
