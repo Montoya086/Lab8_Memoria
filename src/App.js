@@ -36,7 +36,7 @@ const style = {
 const App = () => {
   const [cards, setCards] = useState([])
   const [movs, setMovs] = useState(0)
-  const [corrects, setCorrects] = useState(8)
+  const [corrects, setCorrects] = useState(0)
   const [flipped1, setFlipped1] = useState(null)
   const [flipped2, setFlipped2] = useState(null)
   const [state, setState] = useState(true)
