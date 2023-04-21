@@ -36,6 +36,7 @@ const style = {
 const App = () => {
   const [cards, setCards] = useState([])
   const [movs, setMovs] = useState(0)
+  const [errors, setErrors]=useState(0)
   const [corrects, setCorrects] = useState(0)
   const [flipped1, setFlipped1] = useState(null)
   const [flipped2, setFlipped2] = useState(null)
@@ -75,6 +76,7 @@ const App = () => {
       }else{
         setTimeout(() => {
           handleFail()
+          setErrors(errors+1)
         }, 1500);
       }
     }
@@ -102,6 +104,7 @@ const App = () => {
       <div className="header">
           <p>Movimientos: {movs}</p>
           <p>Aciertos: {corrects}</p>
+          <p>Errores: {errors}</p>
           <Button onClick={handleClose}>Reiniciar</Button>
       </div>
       <div className="container">
